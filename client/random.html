@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Número Random</title>
+    <style>
+        body {
+    background-color: #ffe6f2;
+    color: #d147a3;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    text-align: center;
+    padding: 20px;
+}
+
+button {
+    background-color: #ff99cc;
+    color: #fff;
+    border: 2px solid #d147a3;
+    border-radius: 15px;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px #cc6699;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background-color: #ff80b3;
+    box-shadow: 0 6px #b35986;
+    transform: translateY(-2px);
+}
+
+button:active {
+    box-shadow: 0 2px #b35986;
+    transform: translateY(2px);
+}
+
+p#result {
+    font-size: 1.5em;
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #ffd6e8;
+    border: 2px dashed #d147a3;
+    border-radius: 10px;
+}
+
+#result.error {
+    color: #ff3366;
+}
+
+    </style>
+
+</head>
+<body>
+    <button id="getNumber">Generar número</button>
+    <p id="result">El resultado aparecerá aquí</p>
+
+    <script>
+        document.getElementById('getNumber').addEventListener('click', async () => {
+            try {
+                const response = await fetch('http://localhost:3000/random', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                const data = await response.json();
+                document.getElementById('result').textContent = `${data.number}`;
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('result').textContent = 'Error obteniendo el número';
+            }
+        });
+    </script>
+</body>
+</html>
